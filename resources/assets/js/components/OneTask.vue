@@ -1,7 +1,14 @@
 <template>
     <div v-show="this.visible" v-bind:class="{'task_done': current.is_done}"
          class="card mb-4">
-        <div class="card-header">{{ current.name }}</div>
+
+        <div class="card-header d-inline-flex align-items-center justify-content-between">
+            <div>{{ current.name }}</div>
+            <div class="badge badge-success" @click="changeStatus">
+                <span v-if="current.is_done">Completed</span>
+                <span v-else="">Not completed</span>
+            </div>
+        </div>
         <div class="card-body">
             <div>{{ current.description }}</div>
             <div>Added by: {{ current.created_at | formatDate}}</div>
@@ -81,7 +88,10 @@
     }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped="">
+    .badge-success {
+        cursor: pointer;
+    }
     .task_done {
         background: rgba(green, .15);
     }

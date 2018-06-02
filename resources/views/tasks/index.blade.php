@@ -13,7 +13,7 @@
                     <form action="{{ url('task') }}" method="POST" class="form-horizontal">
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label for="task-name" class="control-label">Name:</label>
+                            <label for="task-name" class="control-label">Title:</label>
                             <input type="text" name="name" id="task-name"
                                    class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                    value="{{ old('name') }}">
