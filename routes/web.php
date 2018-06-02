@@ -21,3 +21,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/tasks', 'TaskController@index')->name('tasks');;
 Route::post('/task', 'TaskController@store');
 Route::delete('/task/{task}', 'TaskController@destroy');
+Route::patch('/task/{task}', 'TaskController@changeStatus');
+Route::get('/task/{task}', 'TaskController@view')->name('task');;
+Route::post('/task/{task}', 'TaskController@save')->name('task.save');;

@@ -2,40 +2,41 @@
 
 @section('content')
     <div class="container">
-        <div class="col-sm-offset-2 col-sm-8">
+        <div class="col-sm-8 col-md-6 mx-auto">
             <div class="card mb-4">
                 <div class="card-header">
                     New Task
                 </div>
 
                 <div class="card-body">
-                    <!-- Display Validation Errors -->
-                @include('common.errors')
-
-                <!-- New Task Form -->
+                    {{--                @include('common.errors')--}}
                     <form action="{{ url('task') }}" method="POST" class="form-horizontal">
-                    {{ csrf_field() }}
-
-                    <!-- Task Name -->
+                        {{ csrf_field() }}
                         <div class="form-group">
                             <label for="task-name" class="control-label">Name:</label>
-                            <div class="form-group">
-                                <input type="text" name="name" id="task-name" class="form-control"
-                                       value="{{ old('task') }}">
-                            </div>
-                            <label for="task-name" class="control-label">Description:</label>
-
-                            <div class="form-group">
-                                <textarea type="text" name="description" id="task-name"
-                                          class="form-control">{{ old('task') }}</textarea>
-                            </div>
+                            <input type="text" name="name" id="task-name"
+                                   class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                   value="{{ old('name') }}">
+                            @if ($errors->has('name'))
+                                <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('name') }}</strong>
+                                    </span>
+                            @endif
                         </div>
-
-                        <!-- Add Task Button -->
                         <div class="form-group">
-                                <button type="submit" class="btn btn-secondary">
-                                    <i class="fa fa-btn fa-plus"></i> Add Task
-                                </button>
+                            <label for="task-description" class="control-label">Description:</label>
+                            <textarea type="text" name="description" id="task-description"
+                                      class="form-control {{ $errors->has('description') ? ' is-invalid' : '' }}">{{ old('description') }}</textarea>
+                            @if ($errors->has('description'))
+                                <span class="invalid-feedback">
+                                        <strong>{{ $errors->first('description') }}</strong>
+                                    </span>
+                            @endif
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="submit" class="btn btn-secondary">
+                                <i class="fa fa-btn fa-plus"></i> Add Task
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -43,42 +44,22 @@
 
             <!-- Current Tasks -->
             @if (count($tasks) > 0)
-                <div class="card">
-                    <div class="card-header">
-                        Current Tasks
-                    </div>
+                <h2>Your tasks:</h2>
+                {{--<div class="card">--}}
+                {{--<div class="card-header">--}}
+                {{--Current Tasks--}}
+                {{--</div>--}}
 
-                    <div class="card-body">
-                        <table class="table table-striped task-table">
-                            <thead>
-                            <th>Task</th>
-                            <th>&nbsp;</th>
-                            </thead>
-                            <tbody>
-                            @foreach ($tasks as $task)
-                                <tr>
-                                    <td class="table-text">
-                                        <div>{{ $task->name }}</div>
-                                    </td>
+                {{--<div class="card-body">--}}
+                {{--@foreach ($tasks as $task)--}}
+                {{--<one-task :task="{{ $task }}"></one-task>--}}
+                {{--@endforeach--}}
+                {{--</div>--}}
+                {{--</div>--}}
 
-                                    <!-- Task Delete Button -->
-                                    <td>
-                                        <form action="{{url('task/' . $task->id)}}" method="POST">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}
-
-                                            <button type="submit" id="delete-task-{{ $task->id }}"
-                                                    class="btn btn-danger">
-                                                <i class="fa fa-btn fa-trash"></i> Delete
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                @foreach ($tasks as $task)
+                    <one-task :task="{{ $task }}"></one-task>
+                @endforeach
             @endif
         </div>
     </div>

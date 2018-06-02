@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    You are logged in! Go to <a href="/tasks/">tasks.</a>
                 </div>
             </div>
         </div>

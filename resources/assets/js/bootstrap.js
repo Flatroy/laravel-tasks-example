@@ -1,3 +1,5 @@
+import Vue from 'vue'
+import moment from 'moment'
 
 window._ = require('lodash');
 window.Popper = require('popper.js').default;
@@ -37,6 +39,13 @@ if (token) {
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+
+
+Vue.filter('formatDate', function(value) {
+    if (value) {
+        return moment(String(value)).format('DD/MM/YYYY hh:mm:ss')
+    }
+})
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
